@@ -11,16 +11,10 @@ map $arg_format $imgp_format {
     avif    "/f:avif";
 }
 
-## ?resize=fit|fill ("fill" is default)
-map $arg_resize $imgp_resize_type {
-    default fill;
-    fit     fit;
-}
-
 ## ?width=123&height=321
 map "$arg_width $arg_height" $imgp_resize {
     default "";
-    "~^[1-9]\d{0,3} [1-9]\d{0,3}$" "/rs:$imgp_resize_type:$arg_width:$arg_height";
+    "~^[1-9]\d{0,3} [1-9]\d{0,3}$" "/rs:fill:$arg_width:$arg_height";
 }
 
 map "" $imgp_cmd {
@@ -38,19 +32,19 @@ server {
 
   root /usr/share/nginx/html;
 
-  # proxy_intercept_errors on;
+  proxy_intercept_errors on;
   error_page 403 404 504 /not-found.html;
 
   location / {
   }
 
-  # location = /favicon.ico {
-  #   rewrite ^/favicon.ico /favicon.svg;
-  # }
+  location = /favicon.ico {
+    rewrite ^/favicon.ico /favicon.svg;
+  }
 
-  # location = /not-found.html {
-  #   internal;
-  # }
+  location = /not-found.html {
+    internal;
+  }
 
 {% if use_imgproxy %}
   location ~ ^/attachments/(?:\w+/)?[\da-f-]+\.(?:jpg|webp|png|gif)$ {
