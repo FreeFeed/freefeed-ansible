@@ -62,5 +62,8 @@
     },
     "privacyControlGroups": {
         "groups": {{ privacy_control_groups|default({})|tojson }}
-    }
+    },
+    "attachmentDomains": [
+      {{ freefeed_media_hostname|tojson }}
+    ]
 }
