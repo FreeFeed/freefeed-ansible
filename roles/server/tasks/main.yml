@@ -11,7 +11,7 @@
   ansible.builtin.user:
     name: freefeed
     group: freefeed
-    home: /var/lib/freefeed
+    home: "{{ home_dir }}"
     createhome: yes
     system: yes
     shell: /sbin/nologin
@@ -91,10 +91,10 @@
   tags:
     - config
 
-- name: Ensure media-tmp
+- name: Ensure shared media dir
   become: yes
   file:
-    path: /var/lib/freefeed/media-tmp
+    path: "{{ home_dir }}/{{ freefeed_env }}/media-tmp"
     state: directory
     owner: freefeed
     group: freefeed
@@ -116,7 +116,7 @@
       - "{{ freefeed_config_dir }}/banlist.txt:/etc/freefeed/banlist.txt:ro"
       - "{{ freefeed_config_dir }}/mailchecker.txt:/etc/freefeed/mailchecker.txt:ro"
       - "{{ freefeed_log_dir }}:/server/log"
-      - /var/lib/freefeed/media-tmp:/media-tmp
+      - "{{ home_dir }}/{{ freefeed_env }}/media-tmp:{{ shared_media_dir }}"
     env:
       NODE_ENV: production
       MONITOR_PREFIX: "{{ monitor_prefix }}"
