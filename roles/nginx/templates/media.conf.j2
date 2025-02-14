@@ -1,6 +1,6 @@
 {% if use_imgproxy %}
 # Limit the frequency of imgproxy requests
-limit_req_zone $binary_remote_addr zone=imgp_limit:10m rate=10r/s;
+limit_req_zone $binary_remote_addr zone=imgp_limit_{{ freefeed_env }}:10m rate=10r/s;
 
 # imgproxy commands
 ## ?format=jpeg|webp|avif
@@ -56,7 +56,7 @@ server {
 
   location /_imgproxy/ {
       internal;
-      limit_req zone=imgp_limit burst=10;
+      limit_req zone=imgp_limit_{{ freefeed_env }} burst=10;
       proxy_pass http://localhost:{{ imgproxy_port }};
   }
 {% endif %}
