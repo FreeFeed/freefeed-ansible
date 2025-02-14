@@ -1,3 +1,24 @@
+- name: Create freefeed group
+  ansible.builtin.group:
+    name: freefeed
+    system: true
+    state: present
+  tags:
+    - config
+
+- name: Create freefeed user
+  become: yes
+  ansible.builtin.user:
+    name: freefeed
+    group: freefeed
+    home: /var/lib/freefeed
+    createhome: yes
+    system: yes
+    shell: /sbin/nologin
+    state: present
+  tags:
+    - config
+
 - name: Ensure "{{ freefeed_config_dir }}"
   become: yes
   file:
@@ -70,6 +91,17 @@
   tags:
     - config
 
+- name: Ensure media-tmp
+  become: yes
+  file:
+    path: /var/lib/freefeed/media-tmp
+    state: directory
+    owner: freefeed
+    group: freefeed
+    mode: '0755'
+  tags:
+    - config
+
 - name: Start server containers
   become: yes
   docker_container:
@@ -84,6 +116,7 @@
       - "{{ freefeed_config_dir }}/banlist.txt:/etc/freefeed/banlist.txt:ro"
       - "{{ freefeed_config_dir }}/mailchecker.txt:/etc/freefeed/mailchecker.txt:ro"
       - "{{ freefeed_log_dir }}:/server/log"
+      - /var/lib/freefeed/media-tmp:/media-tmp
     env:
       NODE_ENV: production
       MONITOR_PREFIX: "{{ monitor_prefix }}"
