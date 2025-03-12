@@ -31,21 +31,29 @@ server {
     if ($imgp_cmd) {
       rewrite ^(.*)$ /_imgproxy$imgp_cmd/plain/{{ freefeed_s3_media_base_url }}$1;
     }
+    proxy_hide_header Content-Disposition;
+    add_header Content-Disposition $media_content_disposition;
     proxy_pass {{ freefeed_s3_media_base_url }};
   }
 
   location /_imgproxy/ {
       internal;
       limit_req zone=imgp_limit_{{ freefeed_env }} burst=10;
+      proxy_hide_header Content-Disposition;
+      add_header Content-Disposition $media_content_disposition;
       proxy_pass http://localhost:{{ imgproxy_port }};
   }
 {% endif %}
 
   location /attachments/ {
+    proxy_hide_header Content-Disposition;
+    add_header Content-Disposition $media_content_disposition;
     proxy_pass {{ freefeed_s3_media_base_url }};
   }
 
   location /profilepics/ {
+    proxy_hide_header Content-Disposition;
+    add_header Content-Disposition $media_content_disposition;
     proxy_pass {{ freefeed_s3_media_base_url }};
   }
 }
