@@ -71,6 +71,17 @@ http {
   # End of imgproxy commands
   {% endif %}
 
+  map $args $has_download_arg {
+    default "";
+    "~(^|&)download([=&]|$)" "1";
+  }
+
+  map "$has_download_arg $upstream_http_content_disposition" $media_content_disposition {
+    default $upstream_http_content_disposition;
+    "~^1 inline(.*)"  "attachment$2";
+    "1 "              "attachment";
+  }
+
   server {
     listen 80 default_server;
     listen [::]:80 default_server;
