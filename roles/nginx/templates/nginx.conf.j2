@@ -65,8 +65,9 @@ http {
       "~^[1-9]\d{0,3} [1-9]\d{0,3}$" "/rs:fill:$arg_width:$arg_height";
   }
 
-  map "" $imgp_cmd {
-      default "$imgp_resize$imgp_format";
+  map "$imgp_resize$imgp_format" $imgp_cmd {
+      ""  "";
+      default "$imgp_resize$imgp_format/q:{{ imgproxy_quality }}";
   }
   # End of imgproxy commands
   {% endif %}
