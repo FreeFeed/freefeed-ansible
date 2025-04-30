@@ -7,3 +7,4 @@ beta_channel_cookie_map: false
 nginx_client_max_body_size: '50M'
 use_imgproxy: false
 imgproxy_port: 9999
+imgproxy_quality: 90
