@@ -12,7 +12,7 @@
     cron_file: freefeed-db-backup
     job: /usr/local/bin/freefeed-db-backup
     user: postgres
-    hour: '2'
+    hour: '4'
     minute: '0'
     state: present
 
