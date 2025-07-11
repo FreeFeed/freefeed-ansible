@@ -32,6 +32,9 @@ user_preferences_overrides:
   notifyOfCommentsOnMyPosts:
     createdSince: "2023-11-27"
     value: true
+  acceptDirectsFrom:
+    createdSince: "2025-07-12"
+    value: 'all'
 cors_proxy_allowed_url_prefixes:
   - https://coub.com/api/oembed.json
   - https://giphy.com/services/oembed
