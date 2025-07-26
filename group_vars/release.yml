@@ -51,3 +51,8 @@ privacy_control_groups:
   protected:
     label: "Makes post protected"
     privacy: "protected"
+
+# Welcome Directs Schedule
+welcome_directs_config:
+  sender: welcome
+  schedule: []

@@ -41,3 +41,46 @@ privacy_control_groups:
   protected:
     label: "Makes post protected"
     privacy: "protected"
+
+# Welcome Directs Schedule
+welcome_directs_config:
+  sender: welcome
+  schedule:
+    -
+      id: greeting_at_start
+      body: >
+        Welcome to FreeFeed!
+
+        Let me introduce myself. I’m @welcome, a little “bot” created to help you find your way around here. This is a direct message, or simply ‘direct’. It’s private; only you and me can see it. 
+
+        Learn what FreeFeed is and how to use it: https://docs.google.com/document/d/1VpXxVroPHDTOTAUOCWlYuxdxP8pbU20pElghAxS8LKM/edit?usp=sharing 
+      comment: >
+        Being a bot I can’t really chat in the comments. If you have any questions, feel free to talk to the real people in the @support or @askfreefeed groups.
+
+    -
+      id: no_posts
+      delay: "PT60M"
+      criterion:
+        type: noPosts
+      body: >
+        Looks like you haven’t posted anything in you feed yet. You could start by introducing yourself and telling us a bit about who you are, by creating a post using the form on the main page (https://freefeed.net/). This way other users can see what you’re into, get curious, and maybe follow you :).
+      comment: >
+        Once you’ve posted your intro, feel free to drop the link into our “Introduce Yourself” thread: https://freefeed.net/freefeed/870836 (or the similar thread in Russian: https://freefeed.net/freefeed/89ff12).
+
+    -
+      id: no_subscriptions
+      skipDays: 1
+      delay: "PT10H"
+      criterion:
+        type: noSubscriptions
+        maxSubscriptions: 2
+        ignore: ["welcome", "ruwelcome", "irwelcome", "freefeed", "support"]
+      body: >
+        Looks like you haven’t followed too many people yet. FreeFeed is a lot more fun if you follow a range of different users and join groups. Why not start exploring?
+        
+        — Browse groups: https://freefeed.net/all-groups
+        — Discover interesting users: https://freefeed.net/summary/7
+        — Jump into the full feed—every post from every user: https://freefeed.net/filter/everything
+
+        Happy exploring!
+
