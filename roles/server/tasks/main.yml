@@ -27,6 +27,14 @@
   tags:
     - config
 
+- name: Ensure "{{ freefeed_config_dir }}/welcome-directs"
+  become: yes
+  file:
+    path: "{{ freefeed_config_dir }}/welcome-directs"
+    state: directory
+  tags:
+    - config
+
 - name: Download mailchecker-list
   become: yes
   ansible.builtin.get_url:
@@ -41,6 +49,15 @@
   register: local_json
   tags:
     - local-json
+    - config
+
+- name: Create "welcome-directs-{{ freefeed_env }}.yml" in "welcome-directs" folder
+  become: yes
+  copy:
+    content: "{{ welcome_directs_config | to_nice_yaml }}"
+    dest: "{{ freefeed_config_dir }}/welcome-directs/local-{{ freefeed_env }}.yml"
+  tags:
+    - welcome-directs
     - config
 
 - name: Validate local-{{ freefeed_env }}.json
