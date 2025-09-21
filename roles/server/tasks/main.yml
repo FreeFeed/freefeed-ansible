@@ -51,7 +51,7 @@
     - local-json
     - config
 
-- name: Create "welcome-directs-{{ freefeed_env }}.yml" in "welcome-directs" folder
+- name: Create "local-{{ freefeed_env }}.yml" in "welcome-directs" folder
   become: yes
   copy:
     content: "{{ welcome_directs_config | to_nice_yaml }}"
