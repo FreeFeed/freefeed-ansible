@@ -130,6 +130,7 @@
       - "{{ item }}:3000"
     volumes:
       - "{{ freefeed_config_dir }}/local-{{ freefeed_env }}.json:/server/config/local-{{ freefeed_env }}.json:ro"
+      - "{{ freefeed_config_dir }}/welcome-directs/local-{{ freefeed_env }}.yml:/server/config/welcome-directs/local-{{ freefeed_env }}.yml:ro"
       - "{{ freefeed_config_dir }}/banlist.txt:/etc/freefeed/banlist.txt:ro"
       - "{{ freefeed_config_dir }}/mailchecker.txt:/etc/freefeed/mailchecker.txt:ro"
       - "{{ freefeed_log_dir }}:/server/log"
